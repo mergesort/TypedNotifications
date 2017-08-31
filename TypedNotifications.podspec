@@ -11,4 +11,9 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
   spec.social_media_url = 'https://twitter.com/mergesort'
   spec.ios.deployment_target = '8.0'
+
+  spec.test_spec 'Tests' do |test_spec|
+    test_spec.source_files = 'Tests/*.swift'
+  end
+
 end
