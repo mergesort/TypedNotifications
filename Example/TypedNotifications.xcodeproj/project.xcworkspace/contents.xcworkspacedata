@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:AppNotificationsExample.xcodeproj">
+      location = "self:TypedNotifications.xcodeproj">
    </FileRef>
 </Workspace>

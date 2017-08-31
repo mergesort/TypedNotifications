@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  AppNotificationsExample
+//  TypedNotifications
 //
-//  Created by Joe Fabisevich on 8/30/17.
+//  Created by Joe Fabisevich on 8/31/17.
 //  Copyright © 2017 Mergesort. All rights reserved.
 //
 

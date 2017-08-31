@@ -1,7 +1,7 @@
 import Foundation
 
 /// A protocol to define notifications that are sent around with our `NotificationCenter` extension functionality
-public protocol AppNotification {
+public protocol TypedNotification {
 
     /// The type must be defined a `Notification`.
     associatedtype Payload
@@ -12,21 +12,21 @@ public protocol AppNotification {
 
 public extension NotificationCenter {
 
-    /// This function posts notifications, using a generic parameter tailored to `AppNotification`s.
+    /// This function posts notifications, using a generic parameter tailored to `TypedNotification`s.
     ///
-    /// - Parameter appNotification: The appNotification to post.
-    func post<T>(appNotification: T) where T: AppNotification {
-        let notification = NotificationCenter.generateNotification(appNotification: appNotification)
+    /// - Parameter typedNotification: The `TypedNotification` to post.
+    func post<T>(typedNotification: T) where T: TypedNotification {
+        let notification = NotificationCenter.generateNotification(typedNotification: typedNotification)
         self.post(notification)
     }
 
-    /// This function registers notifications, tailored to the `AppNotification` type.
+    /// This function registers notifications, tailored to the `TypedNotification` type.
     ///
     /// - Parameters:
-    ///   - type: The AppNotification type to register.
+    ///   - type: The `TypedNotification` type to register.
     ///   - observer: An observer to use for calling the target selector.
     ///   - selector: The selector to call the observer with.
-    func register<T>(type: T.Type, observer: Any, selector: Selector) where T: AppNotification {
+    func register<T>(type: T.Type, observer: Any, selector: Selector) where T: TypedNotification {
         let notificationName = NotificationCenter.generateNotificationName(type: type)
         self.addObserver(observer, selector: selector, name: notificationName, object: nil)
     }
@@ -34,12 +34,12 @@ public extension NotificationCenter {
 
 extension NotificationCenter {
 
-    static func generateNotification<T>(appNotification: T) -> Notification where T: AppNotification {
+    static func generateNotification<T>(typedNotification: T) -> Notification where T: TypedNotification {
         let notificationName = self.generateNotificationName(type: T.self)
-        return Notification(name: notificationName, object: appNotification.payload)
+        return Notification(name: notificationName, object: typedNotification.payload)
     }
 
-    static func generateNotificationName<T>(type: T.Type) -> Notification.Name where T: AppNotification {
+    static func generateNotificationName<T>(type: T.Type) -> Notification.Name where T: TypedNotification {
         let name = String(describing: type)
         let notificationName = Notification.Name(name)
 
@@ -53,8 +53,8 @@ public extension Notification {
     /// typed to the defined `Payload` type.
     ///
     /// - Parameter notificationType: The notificationType to retrieve the payload from.
-    /// - Returns: The payload from the AppNotification.
-    func getPayload<T>(notificationType: T.Type) -> T.Payload? where T: AppNotification {
+    /// - Returns: The payload from the `TypedNotification`.
+    func getPayload<T>(notificationType: T.Type) -> T.Payload? where T: TypedNotification {
         return self.object as? T.Payload
     }
 }
