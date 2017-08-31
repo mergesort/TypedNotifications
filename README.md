@@ -16,14 +16,14 @@
 
 Using TypedNotifications is easy. You can drop it into your app and replace all of your un-typed `Notification`s in minutes.
 
---
+---
 
 ### Registering for Notifications
 
 ```swift
 func register<T>(type: T.Type, observer: Any, selector: Selector) where T: TypedNotification
 ```
---
+---
 
 ### Sending Notifications
 
@@ -32,7 +32,7 @@ func register<T>(type: T.Type, observer: Any, selector: Selector) where T: Typed
 func post<T>(typedNotification: T) where T: TypedNotification
 
 ```
---
+---
 
 ### Extracting values from Notifications
 
@@ -40,8 +40,7 @@ func post<T>(typedNotification: T) where T: TypedNotification
 ```swift
 func getPayload<T>(notificationType: T.Type) -> T.Payload? where T: TypedNotification
 ```
-
---
+---
 
 Now that might look a little scary at first with all those `T`s, but let's break it down with some examples and show you how easy this is.
 
@@ -118,6 +117,8 @@ struct GenericTypedNotification<T>: TypedNotification {
 
 }
 ```
+
+---
 
 ## Requirements
 
