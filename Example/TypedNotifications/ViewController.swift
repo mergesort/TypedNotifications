@@ -18,6 +18,7 @@ enum Job {
     
     var title: String {
         switch self {
+
         case .softwareDeveloper:
             return "Software Developer"
             
@@ -41,7 +42,7 @@ struct Person {
 
 /// A very simple payload to send.
 /// Just contains one boolean value.
-struct BooleanTypedNotification: TypedNotification {
+struct TypedBooleanNotification: TypedNotification {
     
     let payload: Bool
     
@@ -49,7 +50,7 @@ struct BooleanTypedNotification: TypedNotification {
 
 /// A slightly more complicated payload to send.
 /// It contains a struct as it's payload.
-struct PersonTypedNotification: TypedNotification {
+struct TypedPersonNotification: TypedNotification {
     
     let payload: Person
     
@@ -57,7 +58,7 @@ struct PersonTypedNotification: TypedNotification {
 
 /// A more complicated payload to send.
 /// It contains any generic value you want to send, and recieve.
-struct GenericTypedNotification<T>: TypedNotification {
+struct TypedGenericNotification<T>: TypedNotification {
     
     let payload: T
     
@@ -70,9 +71,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.register(type: BooleanTypedNotification.self, observer: self, selector: #selector(booleanWasReceived))
-        NotificationCenter.default.register(type: PersonTypedNotification.self, observer: self, selector: #selector(personWasReceived))
-        NotificationCenter.default.register(type: GenericTypedNotification<String>.self, observer: self, selector: #selector(stringWasReceived))
+        NotificationCenter.default.register(type: TypedBooleanNotification.self, observer: self, selector: #selector(booleanWasReceived))
+        NotificationCenter.default.register(type: TypedPersonNotification.self, observer: self, selector: #selector(personWasReceived))
+        NotificationCenter.default.register(type: TypedGenericNotification<String>.self, observer: self, selector: #selector(stringWasReceived))
     }
     
 }
@@ -81,19 +82,19 @@ private extension ViewController {
     
     @IBAction func tappedSendPeopleButton() {
         let amanda = Person(name: "Amanda", job: .softwareDeveloper)
-        let amandaNotification = PersonTypedNotification(payload: amanda)
+        let amandaNotification = TypedPersonNotification(payload: amanda)
         
         NotificationCenter.default.post(typedNotification: amandaNotification)
         
         let erica = Person(name: "Erica", job: .designer)
-        let ericaNotification = PersonTypedNotification(payload: erica)
+        let ericaNotification = TypedPersonNotification(payload: erica)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
             NotificationCenter.default.post(typedNotification: ericaNotification)
         }
         
         let joe = Person(name: "Joe", job: .conArtist)
-        let joeNotification = PersonTypedNotification(payload: joe)
+        let joeNotification = TypedPersonNotification(payload: joe)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4)) {
             NotificationCenter.default.post(typedNotification: joeNotification)
@@ -101,17 +102,17 @@ private extension ViewController {
     }
     
     @IBAction func tappedSendBooleanButton() {
-        let booleanNotification = BooleanTypedNotification(payload: true)
+        let booleanNotification = TypedBooleanNotification(payload: true)
         NotificationCenter.default.post(typedNotification: booleanNotification)
     }
     
     @IBAction func tappedGenericValuesButton() {
-        let genericNotification = GenericTypedNotification<String>(payload: "This is a payload")
+        let genericNotification = TypedGenericNotification<String>(payload: "This is a payload")
         NotificationCenter.default.post(typedNotification: genericNotification)
     }
     
     @objc func booleanWasReceived(notification: Notification) {
-        guard let boolean = notification.getPayload(notificationType: BooleanTypedNotification.self) else {
+        guard let boolean = notification.getPayload(notificationType: TypedBooleanNotification.self) else {
             os_log("Could not properly retrieve payload from BooleanTypedNotification")
             return
         }
@@ -120,7 +121,7 @@ private extension ViewController {
     }
     
     @objc func personWasReceived(notification: Notification) {
-        guard let person = notification.getPayload(notificationType: PersonTypedNotification.self) else {
+        guard let person = notification.getPayload(notificationType: TypedPersonNotification.self) else {
             os_log("Could not properly retrieve payload from PersonTypedNotification")
             return
         }
@@ -132,7 +133,7 @@ private extension ViewController {
     }
     
     @objc func stringWasReceived(notification: Notification) {
-        guard let string = notification.getPayload(notificationType: GenericTypedNotification<String>.self) else {
+        guard let string = notification.getPayload(notificationType: TypedGenericNotification<String>.self) else {
             os_log("Could not properly retrieve payload from GenericTypedNotification")
             return
         }
