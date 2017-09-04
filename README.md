@@ -68,7 +68,7 @@ struct Person {
 #### Create the notification to send your value
 
 ```swift
-struct PersonTypedNotification: TypedNotification {
+struct TypedPersonNotification: TypedNotification {
 
     let payload: Person
 
@@ -78,14 +78,14 @@ struct PersonTypedNotification: TypedNotification {
 #### Register the notification
 
 ```swift
-NotificationCenter.default.register(type: PersonTypedNotification.self, observer: self, selector: #selector(personNotificationWasReceived))
+NotificationCenter.default.register(type: TypedPersonNotification.self, observer: self, selector: #selector(personNotificationWasReceived))
 ```
 
 #### Send the notification
 
 ```swift
 let amanda = Person(name: "Amanda", job: .softwareDeveloper)
-let amandaNotification = PersonTypedNotification(payload: amanda)
+let amandaNotification = TypedPersonNotification(payload: amanda)
 NotificationCenter.default.post(typedNotification: amandaNotification)
 ```
 
@@ -94,8 +94,8 @@ NotificationCenter.default.post(typedNotification: amandaNotification)
 
 ```swift
 @objc func personNotificationWasReceived(notification: Notification) {
-    guard let person = notification.getPayload(notificationType: PersonTypedNotification.self) else {
-        os_log("Could not properly retrieve payload from PersonTypedNotification")
+    guard let person = notification.getPayload(notificationType: TypedPersonNotification.self) else {
+        os_log("Could not properly retrieve payload from TypedPersonNotification")
         return
     }
     
