@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'TypedNotifications'
-  spec.version      = '1.0'
+  spec.version      = '1.1'
   spec.license      = { :type => 'MIT', :file => 'LICENSE' }
   spec.homepage     = 'https://github.com/mergesort/TypedNotifications'
   spec.authors      =  { 'Joe Fabisevich' => 'github@fabisevi.ch' }
