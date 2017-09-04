@@ -5,7 +5,7 @@ Pod::Spec.new do |spec|
   spec.homepage     = 'https://github.com/mergesort/TypedNotifications'
   spec.authors      =  { 'Joe Fabisevich' => 'github@fabisevi.ch' }
   spec.summary      = 'A wrapper around NotificationCenter for sending typed notifications with payloads across your iOS app.'
-  spec.source       =   { :git => 'https://github.com/mergesort/TypedNotifications', :tag => "#{spec.version}" }
+  spec.source       =   { :git => 'https://github.com/mergesort/TypedNotifications.git', :tag => "#{spec.version}" }
   spec.source_files = 'Source/*.swift'
   spec.framework    = 'Foundation'
   spec.requires_arc = true
