@@ -1,8 +1,10 @@
 import Foundation
 
-/// A protocol to define notifications that are sent around with our `NotificationCenter` extension functionality
+/// A protocol to define notifications that are sent around with our `NotificationCenter` extension functionality.
 public protocol TypedNotification {}
 
+/// A protocol to define notifications that are sent around with our `NotificationCenter` extension functionality
+/// and contain a payload.
 public protocol TypedPayloadNotification: TypedNotification {
 
     /// The type must be defined a `Notification`.
@@ -29,7 +31,6 @@ public extension NotificationCenter {
         let notification = NotificationCenter.generateNotification(typedNotification: typedNotification)
         self.post(notification)
     }
-
     
     /// This function registers notifications, tailored to the `TypedNotification` type.
     ///
