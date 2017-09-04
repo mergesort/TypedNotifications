@@ -1,7 +1,6 @@
 # TypedNotifications
 
 ### A wrapper around `NotificationCenter` for sending typed notifications with payloads across your iOS app.
----
 
 [![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59a836506532420001f89b3b&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59a836506532420001f89b3b/build/latest?branch=master) 
 [![Pod Version](https://img.shields.io/badge/Pod-1.0-6193DF.svg)](https://cocoapods.org/)
@@ -20,25 +19,36 @@ Using TypedNotifications is easy. You can drop it into your app and replace all 
 
 ### Registering for Notifications
 
+You can register notifications for either payload containing notifications, or payload-free notifications.
+
 ```swift
-func register<T>(type: T.Type, observer: Any, selector: Selector) where T: TypedNotification
+func register<T: TypedNotification>(type: T.Type, observer: Any, selector: Selector)
+```
+
+```swift
+func register<T: TypedPayloadNotification>(type: T.Type, observer: Any, selector: Selector)
 ```
 ---
 
 ### Sending Notifications
 
+You can send notifications for either payload containing notifications, or payload-free notifications.
 
 ```swift
-func post<T>(typedNotification: T) where T: TypedNotification
+func post<T: TypedNotification>(typedNotification: T)
+```
 
+```swift
+func post<T: TypedPayloadNotification>(typedNotification: T)
 ```
 ---
 
 ### Extracting values from Notifications
 
+Only payload containing notifications can have their payload extracted, because, duh.
 
 ```swift
-func getPayload<T>(notificationType: T.Type) -> T.Payload? where T: TypedNotification
+func getPayload<T: TypedPayloadNotification>(notificationType: T.Type) -> T.Payload?
 ```
 ---
 
@@ -67,8 +77,16 @@ struct Person {
 
 #### Create the notification to send your value
 
+If you have no payload and just want to send a message, use a `TypedNotification` like so.
+
 ```swift
-struct TypedPersonNotification: TypedNotification {
+struct SomeEventNotification: TypedNotification {}
+```
+
+For our example, let's use a `TypedPayloadNotification` with a payload though.
+
+```swift
+struct TypedPersonNotification: TypedPayloadNotification {
 
     let payload: Person
 
@@ -111,7 +129,7 @@ NotificationCenter.default.post(typedNotification: amandaNotification)
 If you want to play on expert mode, I recommend using generics and passing notifications through your app that way.
 
 ```swift
-struct GenericTypedNotification<T>: TypedNotification {
+struct GenericTypedPayloadNotification<T>: TypedPayloadNotification {
 
     let payload: T
 
