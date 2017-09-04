@@ -17,7 +17,7 @@ public extension NotificationCenter {
     /// This function posts notifications, using a generic parameter tailored to `TypedNotification`s.
     ///
     /// - Parameter typedNotification: The `TypedNotification` to post.
-    func post<T>(typedNotification: T) where T: TypedNotification {
+    func post<T: TypedNotification>(typedNotification: T) {
         let notification = NotificationCenter.generateNotification(typedNotification: typedNotification)
         self.post(notification)
     }
@@ -25,7 +25,7 @@ public extension NotificationCenter {
     /// This function posts notifications, using a generic parameter tailored to `TypedPayloadNotification`s.
     ///
     /// - Parameter typedNotification: The `TypedPayloadNotification` to post.
-    func post<T>(typedNotification: T) where T: TypedPayloadNotification {
+    func post<T: TypedPayloadNotification>(typedNotification: T) {
         let notification = NotificationCenter.generateNotification(typedNotification: typedNotification)
         self.post(notification)
     }
@@ -37,7 +37,7 @@ public extension NotificationCenter {
     ///   - type: The `TypedNotification` type to register.
     ///   - observer: An observer to use for calling the target selector.
     ///   - selector: The selector to call the observer with.
-    func register<T>(type: T.Type, observer: Any, selector: Selector) where T: TypedNotification {
+    func register<T: TypedNotification>(type: T.Type, observer: Any, selector: Selector) {
         let notificationName = NotificationCenter.generateNotificationName(type: type)
         self.addObserver(observer, selector: selector, name: notificationName, object: nil)
     }
@@ -45,17 +45,17 @@ public extension NotificationCenter {
 
 extension NotificationCenter {
 
-    static func generateNotification<T>(typedNotification: T) -> Notification where T: TypedNotification {
+    static func generateNotification<T: TypedNotification>(typedNotification: T) -> Notification {
         let notificationName = self.generateNotificationName(type: T.self)
         return Notification(name: notificationName)
     }
 
-    static func generateNotification<T>(typedNotification: T) -> Notification where T: TypedPayloadNotification {
+    static func generateNotification<T: TypedPayloadNotification>(typedNotification: T) -> Notification {
         let notificationName = self.generateNotificationName(type: T.self)
         return Notification(name: notificationName, object: typedNotification.payload)
     }
     
-    static func generateNotificationName<T>(type: T.Type) -> Notification.Name where T: TypedNotification {
+    static func generateNotificationName<T: TypedNotification>(type: T.Type) -> Notification.Name {
         let name = String(describing: type)
         let notificationName = Notification.Name(name)
 
@@ -70,7 +70,7 @@ public extension Notification {
     ///
     /// - Parameter notificationType: The notificationType to retrieve the payload from.
     /// - Returns: The payload from the `TypedNotification`.
-    func getPayload<T>(notificationType: T.Type) -> T.Payload? where T: TypedPayloadNotification {
+    func getPayload<T: TypedPayloadNotification>(notificationType: T.Type) -> T.Payload? {
         return self.object as? T.Payload
     }
 }
