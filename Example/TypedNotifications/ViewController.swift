@@ -40,9 +40,12 @@ struct Person {
     
 }
 
+/// A `TypedNotification` with no payload.
+struct PayloadFreeTypedNotification: TypedNotification {}
+
 /// A very simple payload to send.
 /// Just contains one boolean value.
-struct TypedBooleanNotification: TypedNotification {
+struct TypedBooleanNotification: TypedPayloadNotification {
     
     let payload: Bool
     
@@ -50,7 +53,7 @@ struct TypedBooleanNotification: TypedNotification {
 
 /// A slightly more complicated payload to send.
 /// It contains a struct as it's payload.
-struct TypedPersonNotification: TypedNotification {
+struct TypedPersonNotification: TypedPayloadNotification {
     
     let payload: Person
     
@@ -58,7 +61,7 @@ struct TypedPersonNotification: TypedNotification {
 
 /// A more complicated payload to send.
 /// It contains any generic value you want to send, and recieve.
-struct TypedGenericNotification<T>: TypedNotification {
+struct TypedGenericNotification<T>: TypedPayloadNotification {
     
     let payload: T
     
@@ -74,6 +77,8 @@ class ViewController: UIViewController {
         NotificationCenter.default.register(type: TypedBooleanNotification.self, observer: self, selector: #selector(booleanWasReceived))
         NotificationCenter.default.register(type: TypedPersonNotification.self, observer: self, selector: #selector(personWasReceived))
         NotificationCenter.default.register(type: TypedGenericNotification<String>.self, observer: self, selector: #selector(stringWasReceived))
+        
+        NotificationCenter.default.register(type: PayloadFreeTypedNotification.self, observer: self, selector: #selector(payloadFreeWasReceived))
     }
     
 }
@@ -101,6 +106,11 @@ private extension ViewController {
         }
     }
     
+    @IBAction func tappedSendPayloadFreeButton() {
+        let payloadFreeNotification = PayloadFreeTypedNotification()
+        NotificationCenter.default.post(typedNotification: payloadFreeNotification)
+    }
+
     @IBAction func tappedSendBooleanButton() {
         let booleanNotification = TypedBooleanNotification(payload: true)
         NotificationCenter.default.post(typedNotification: booleanNotification)
@@ -109,6 +119,10 @@ private extension ViewController {
     @IBAction func tappedGenericValuesButton() {
         let genericNotification = TypedGenericNotification<String>(payload: "This is a payload")
         NotificationCenter.default.post(typedNotification: genericNotification)
+    }
+    
+    @objc func payloadFreeWasReceived(notification: Notification) {
+        self.currentNotificationLabel.text = "Got our payload free notification!"
     }
     
     @objc func booleanWasReceived(notification: Notification) {

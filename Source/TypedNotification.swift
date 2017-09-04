@@ -1,7 +1,9 @@
 import Foundation
 
 /// A protocol to define notifications that are sent around with our `NotificationCenter` extension functionality
-public protocol TypedNotification {
+public protocol TypedNotification {}
+
+public protocol TypedPayloadNotification: TypedNotification {
 
     /// The type must be defined a `Notification`.
     associatedtype Payload
@@ -20,6 +22,15 @@ public extension NotificationCenter {
         self.post(notification)
     }
 
+    /// This function posts notifications, using a generic parameter tailored to `TypedPayloadNotification`s.
+    ///
+    /// - Parameter typedNotification: The `TypedPayloadNotification` to post.
+    func post<T>(typedNotification: T) where T: TypedPayloadNotification {
+        let notification = NotificationCenter.generateNotification(typedNotification: typedNotification)
+        self.post(notification)
+    }
+
+    
     /// This function registers notifications, tailored to the `TypedNotification` type.
     ///
     /// - Parameters:
@@ -36,9 +47,14 @@ extension NotificationCenter {
 
     static func generateNotification<T>(typedNotification: T) -> Notification where T: TypedNotification {
         let notificationName = self.generateNotificationName(type: T.self)
-        return Notification(name: notificationName, object: typedNotification.payload)
+        return Notification(name: notificationName)
     }
 
+    static func generateNotification<T>(typedNotification: T) -> Notification where T: TypedPayloadNotification {
+        let notificationName = self.generateNotificationName(type: T.self)
+        return Notification(name: notificationName, object: typedNotification.payload)
+    }
+    
     static func generateNotificationName<T>(type: T.Type) -> Notification.Name where T: TypedNotification {
         let name = String(describing: type)
         let notificationName = Notification.Name(name)
@@ -54,7 +70,7 @@ public extension Notification {
     ///
     /// - Parameter notificationType: The notificationType to retrieve the payload from.
     /// - Returns: The payload from the `TypedNotification`.
-    func getPayload<T>(notificationType: T.Type) -> T.Payload? where T: TypedNotification {
+    func getPayload<T>(notificationType: T.Type) -> T.Payload? where T: TypedPayloadNotification {
         return self.object as? T.Payload
     }
 }
