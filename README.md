@@ -3,8 +3,8 @@
 ### A wrapper around `NotificationCenter` for sending typed notifications with payloads across your iOS app.
 
 [![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59a836506532420001f89b3b&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59a836506532420001f89b3b/build/latest?branch=master) 
-[![Pod Version](https://img.shields.io/badge/Pod-1.1-6193DF.svg)](https://cocoapods.org/)
-![Swift Version](https://img.shields.io/badge/Swift-3.0%20|%203.1%20|%203.2%20|%204.0-brightgreen.svg)
+[![Pod Version](https://img.shields.io/badge/Pod-1.2-6193DF.svg)](https://cocoapods.org/)
+![Swift Version](https://img.shields.io/badge/Swift%204.2-brightgreen.svg)
 ![License MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg) 
 ![Plaform](https://img.shields.io/badge/Platform-iOS-lightgrey.svg)
 
