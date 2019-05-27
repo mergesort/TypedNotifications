@@ -39,7 +39,7 @@ func post<T: TypedNotification>(typedNotification: T, object: Any? = nil)
 ```
 
 ```swift
-func func post<T: TypedPayloadNotification>(typedNotification: T, object: Any? = nil)
+func post<T: TypedPayloadNotification>(typedNotification: T, object: Any? = nil)
 ```
 ---
 
