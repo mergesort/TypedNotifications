@@ -32,7 +32,7 @@ public extension NotificationCenter {
     /// This function posts notifications, using a generic parameter tailored to `TypedPayloadNotification`s.
     ///
     /// - Parameter typedNotification: The `TypedPayloadNotification` to post.
-    func post<T: TypedPayloadNotification>(typedNotification: T, object: Any?) {
+    func post<T: TypedPayloadNotification>(typedNotification: T, object: Any? = nil) {
         let notification = NotificationCenter.generateNotification(
             typedNotification: typedNotification,
             object: object
