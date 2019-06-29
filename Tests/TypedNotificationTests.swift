@@ -4,7 +4,7 @@ import XCTest
 struct TypedTestNotification: TypedNotification {}
 
 struct TypedPayloadTestNotification: TypedPayloadNotification {
-    
+
     let payload: Bool
     
 }
@@ -14,21 +14,23 @@ final class TypedNotificationTests: XCTestCase {
 
     static let passingValue = true
     static let failingValue = false
+    static let testObject = 42
+
 
     // MARK: TypedNotification properties
-    
+
     let payloadFreeTypedNotification = TypedTestNotification()
 
     lazy var payloadFreeNotification: Notification = {
         return NotificationCenter.generateNotification(typedNotification: self.payloadFreeTypedNotification)
     }()
-    
+
     // MARK: TypedPayloadNotification properties
-    
+
     let passingTypedPayloadNotification = TypedPayloadTestNotification(payload: TypedNotificationTests.passingValue)
-    
+
     lazy var passingNotification: Notification = {
-        return NotificationCenter.generateNotification(typedNotification: self.passingTypedPayloadNotification)
+        return NotificationCenter.generateNotification(typedNotification: self.passingTypedPayloadNotification, object: TypedNotificationTests.testObject)
     }()
 
     let failingTypedPayloadNotification = TypedPayloadTestNotification(payload: TypedNotificationTests.failingValue)
@@ -54,8 +56,15 @@ final class TypedNotificationTests: XCTestCase {
     // MARK: TypedPayloadNotification tests
 
     func testCorrectTypedPayloadNotificationGeneration() {
-        let generatedNotification = NotificationCenter.generateNotification(typedNotification: self.passingTypedPayloadNotification)
+        let generatedNotification = NotificationCenter.generateNotification(typedNotification: self.passingTypedPayloadNotification, object: TypedNotificationTests.testObject)
         XCTAssertTrue(generatedNotification == passingNotification, "passingTypedNotification was expected to generate a matching notification")
+
+        guard let testInt = generatedNotification.object as? Int else {
+            XCTFail()
+            return
+        }
+
+        XCTAssertEqual(testInt, TypedNotificationTests.testObject, "passingTypedNotification was expected to generate a matching notification")
     }
 
     func testIncorrectTypedPayloadNotificationGeneration() {

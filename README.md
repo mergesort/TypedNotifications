@@ -3,8 +3,8 @@
 ### A wrapper around `NotificationCenter` for sending typed notifications with payloads across your iOS app.
 
 [![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59a836506532420001f89b3b&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59a836506532420001f89b3b/build/latest?branch=master) 
-[![Pod Version](https://img.shields.io/badge/Pod-1.2-6193DF.svg)](https://cocoapods.org/)
-![Swift Version](https://img.shields.io/badge/Swift%204.2-brightgreen.svg)
+[![Pod Version](https://img.shields.io/badge/Pod-1.3-6193DF.svg)](https://cocoapods.org/)
+![Swift Version](https://img.shields.io/badge/Swift%205.0-brightgreen.svg)
 ![License MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg) 
 ![Plaform](https://img.shields.io/badge/Platform-iOS-lightgrey.svg)
 
@@ -22,11 +22,11 @@ Using TypedNotifications is easy. You can drop it into your app and replace all 
 You can register notifications for either payload containing notifications, or payload-free notifications.
 
 ```swift
-func register<T: TypedNotification>(type: T.Type, observer: Any, selector: Selector)
+func register<T: TypedNotification>(type: T.Type, observer: Any, object: Any? = nil, selector: Selector)
 ```
 
 ```swift
-func register<T: TypedPayloadNotification>(type: T.Type, observer: Any, selector: Selector)
+func register<T: TypedPayloadNotification>(type: T.Type, observer: Any, object: Any? = nil, selector: Selector)
 ```
 ---
 
@@ -35,11 +35,11 @@ func register<T: TypedPayloadNotification>(type: T.Type, observer: Any, selector
 You can send notifications for either payload containing notifications, or payload-free notifications.
 
 ```swift
-func post<T: TypedNotification>(typedNotification: T)
+func post<T: TypedNotification>(typedNotification: T, object: Any? = nil)
 ```
 
 ```swift
-func post<T: TypedPayloadNotification>(typedNotification: T)
+func post<T: TypedPayloadNotification>(typedNotification: T, object: Any? = nil)
 ```
 ---
 
