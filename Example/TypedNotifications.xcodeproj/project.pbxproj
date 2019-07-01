@@ -79,7 +79,7 @@
 		B7EBAD0B1F5871A600A08C26 /* TypedNotifications */ = {
 			isa = PBXGroup;
 			children = (
-				B7EBAD2C1F5871E800A08C26 /* Source */,
+				B7EBAD2C1F5871E800A08C26 /* Sources */,
 				B7EBAD2E1F5871E800A08C26 /* Tests */,
 				B7EBAD0C1F5871A600A08C26 /* AppDelegate.swift */,
 				B7EBAD0E1F5871A600A08C26 /* ViewController.swift */,
@@ -99,13 +99,13 @@
 			path = TypedNotificationsTests;
 			sourceTree = "<group>";
 		};
-		B7EBAD2C1F5871E800A08C26 /* Source */ = {
+		B7EBAD2C1F5871E800A08C26 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				B7EBAD2D1F5871E800A08C26 /* TypedNotification.swift */,
 			);
-			name = Source;
-			path = ../../Source;
+			name = Sources;
+			path = ../../Sources/TypedNotification;
 			sourceTree = "<group>";
 		};
 		B7EBAD2E1F5871E800A08C26 /* Tests */ = {
@@ -114,7 +114,7 @@
 				B7EBAD2F1F5871E800A08C26 /* TypedNotificationTests.swift */,
 			);
 			name = Tests;
-			path = ../../Tests;
+			path = ../../Tests/TypedNotificationTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
