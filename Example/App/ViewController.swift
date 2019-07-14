@@ -8,6 +8,7 @@
 
 import os.log
 import UIKit
+import TypedNotifications
 
 // There are only 3 jobs in the world, trust me.
 enum Job {
