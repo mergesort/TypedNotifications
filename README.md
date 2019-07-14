@@ -3,7 +3,7 @@
 ### A wrapper around `NotificationCenter` for sending typed notifications with payloads across your iOS app.
 
 [![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59a836506532420001f89b3b&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59a836506532420001f89b3b/build/latest?branch=master) 
-[![Pod Version](https://img.shields.io/badge/Pod-1.3-6193DF.svg)](https://cocoapods.org/)
+[![Pod Version](https://img.shields.io/badge/Pod-1.4.0-6193DF.svg)](https://cocoapods.org/)
 ![Swift Version](https://img.shields.io/badge/Swift%205.0-brightgreen.svg)
 ![License MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg) 
 ![Plaform](https://img.shields.io/badge/Platform-iOS-lightgrey.svg)
@@ -144,7 +144,10 @@ struct GenericTypedPayloadNotification<T>: TypedPayloadNotification {
 - Xcode 7.3+
 
 ## Installation
-You can use [CocoaPods](http://cocoapods.org/) to install `TypedNotifications` by adding it to your `Podfile`:
+
+SPM will be the default supported installation method from version 1.4.0 and higher, so please integrate by using SPM.
+
+If you're still using [CocoaPods](http://cocoapods.org/) for version 1.4.0 or below you can install `TypedNotifications` by adding it to your `Podfile`:
 
 ```ruby
 platform :ios, '8.0'
